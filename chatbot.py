@@ -14,10 +14,6 @@ load_dotenv()
 loader = CSVLoader(file_path="data/cleaned_data.csv", encoding="utf-8")
 docs = loader.load()
 
-# Split into smaller chunks (so embeddings are better)
-splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-docs_split = splitter.split_documents(docs)
-
 # Create vector store using OpenAI embeddings
 embedding = OpenAIEmbeddings()
 db = FAISS.from_documents(docs, embedding)
