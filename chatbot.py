@@ -2,6 +2,7 @@ import os
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.document_loaders import CSVLoader
+from langchain.text_splitter import CharacterTextSplitter
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from dotenv import load_dotenv
@@ -12,6 +13,10 @@ load_dotenv()
 # Load your CSV data
 loader = CSVLoader(file_path="data/cleaned_data.csv", encoding="utf-8")
 docs = loader.load()
+
+# Split into smaller chunks (so embeddings are better)
+splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+docs_split = splitter.split_documents(docs)
 
 # Create vector store using OpenAI embeddings
 embedding = OpenAIEmbeddings()
