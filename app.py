@@ -8,3 +8,4 @@ if query:
     with st.spinner("Thinking..."):
         response = ask_bot(query)
     st.success(response)
+    
